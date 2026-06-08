@@ -7,9 +7,9 @@ Thank you for helping improve the Reformer Museum mini-app. This guide covers se
 ### Fork and clone
 
 ```bash
-git clone https://github.com/<your-username>/old-ai-model-research.git
-cd old-ai-model-research
-git remote add upstream https://github.com/<upstream-org>/old-ai-model-research.git
+git clone https://github.com/jseramn/reformer-transformer-museum.git
+cd reformer-transformer-museum
+git remote add upstream https://github.com/jseramn/reformer-transformer-museum.git
 cp .env.example .env
 ```
 
@@ -40,13 +40,25 @@ npm run dev
 
 ### Modal backend (`modal/`)
 
+**Authenticate once** (required before `modal serve`):
+
+```bash
+modal token new
+```
+
+If you see `Error: Token missing`, run the command above and complete login in the browser.
+
+Or use tokens from Vercel Marketplace → Modal integration:
+
+```bash
+modal token set --token-id <ID> --token-secret <SECRET>
+```
+
+**Serve locally:**
+
 ```bash
 cd modal
-python -m venv .venv
-# Windows: .venv\Scripts\activate
-# macOS/Linux: source .venv/bin/activate
-pip install -r requirements.txt
-modal token set --token-id $MODAL_TOKEN_ID --token-secret $MODAL_TOKEN_SECRET
+pip install modal transformers torch fastapi pydantic
 modal serve app.py
 ```
 

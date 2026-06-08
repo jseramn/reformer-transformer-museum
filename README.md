@@ -24,8 +24,8 @@ The model generates continuations of English text in the style of *Crime and Pun
 ### Clone
 
 ```bash
-git clone https://github.com/<your-org>/old-ai-model-research.git
-cd old-ai-model-research
+git clone https://github.com/jseramn/reformer-transformer-museum.git
+cd reformer-transformer-museum
 cp .env.example .env
 ```
 
@@ -59,20 +59,35 @@ Open [http://localhost:3000](http://localhost:3000). The app expects `MODAL_ENDP
 
 ### Modal (`modal/`)
 
+**First time only — authenticate Modal** (fixes `Token missing`):
+
+```bash
+# With your venv active (e.g. reformer\Scripts\activate on Windows)
+pip install modal
+modal token new
+```
+
+`modal token new` opens the browser to log in at [modal.com](https://modal.com) and saves credentials locally. You only do this once per machine.
+
+**Alternative** — if you already connected the [Vercel ↔ Modal](https://vercel.com/marketplace/modal) integration, copy `MODAL_TOKEN_ID` and `MODAL_TOKEN_SECRET` from the Vercel project settings:
+
+```bash
+# Windows PowerShell
+modal token set --token-id YOUR_ID --token-secret YOUR_SECRET
+
+# macOS / Linux
+modal token set --token-id $MODAL_TOKEN_ID --token-secret $MODAL_TOKEN_SECRET
+```
+
+**Run the inference server:**
+
 ```bash
 cd modal
-python -m venv .venv
-# Windows
-.venv\Scripts\activate
-# macOS / Linux
-source .venv/bin/activate
-
-pip install -r requirements.txt
-modal token set --token-id $MODAL_TOKEN_ID --token-secret $MODAL_TOKEN_SECRET
+pip install modal transformers torch fastapi pydantic
 modal serve app.py
 ```
 
-`modal serve` prints a dev endpoint URL—set `MODAL_ENDPOINT_URL` in your web `.env.local` to that value.
+`modal serve` prints a dev endpoint URL—set `MODAL_ENDPOINT_URL` in `web/.env.local` to that value (usually ends with `/generate`).
 
 ### Full stack
 
@@ -83,15 +98,15 @@ modal serve app.py
 
 ## Deploy Vercel (`web/`)
 
-The repo root [`vercel.json`](./vercel.json) points Vercel at the Next.js app in `web/`:
-
-1. Import the repository in [Vercel](https://vercel.com/new).
-2. Set **Root Directory** to `web` (or configure the monorepo layout to match your project settings).
-3. Add environment variables from [`.env.example`](./.env.example):
+1. Import [jseramn/reformer-transformer-museum](https://github.com/jseramn/reformer-transformer-museum) in [Vercel](https://vercel.com/new).
+2. Set **Root Directory** to `web`.
+3. Set **Production Branch** to `master` (Settings → Git).
+4. Install Marketplace integrations: [Modal](https://vercel.com/marketplace/modal) and [PostHog](https://vercel.com/marketplace/posthog).
+5. Add environment variables from [`.env.example`](./.env.example):
    - `MODAL_ENDPOINT_URL` — production Modal web endpoint
    - `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` / `NEXT_PUBLIC_POSTHOG_HOST` — analytics (optional)
-   - `NEXT_PUBLIC_GITHUB_REPO_URL` — footer link (optional)
-4. Deploy. Vercel runs `npm install` and `npm run build` per `vercel.json`.
+   - `NEXT_PUBLIC_GITHUB_REPO_URL` — `https://github.com/jseramn/reformer-transformer-museum`
+6. Deploy. Vercel runs `npm install` and `npm run build` inside `web/`.
 
 ## Deploy Modal
 

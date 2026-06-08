@@ -18,3 +18,7 @@ modal/.modal-cache/
 .env
 .env*.local
 *.pem
+
+# Local artifacts
+grok_output.md
+terminals/
