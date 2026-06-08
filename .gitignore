@@ -3,4 +3,18 @@ venv/
 env/
 reformer/
 node_modules/
-reformer/
+mcps/
+
+# Next.js
+web/.next/
+web/out/
+web/.env
+web/.env*.local
+
+# Modal
+modal/.modal-cache/
+
+# Environment
+.env
+.env*.local
+*.pem

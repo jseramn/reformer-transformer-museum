@@ -1,0 +1,120 @@
+{
+  "nav": {
+    "brand": "Reformer Museum",
+    "home": "Home",
+    "history": "History",
+    "howItWorks": "How it works",
+    "experiment": "Experiment",
+    "languageEs": "ES",
+    "languageEn": "EN"
+  },
+  "hero": {
+    "eyebrow": "A 2020 model",
+    "title": "A machine that learned to write like Dostoevsky",
+    "lead": "In 2020, Google researchers trained a language model on Crime and Punishment. This museum tells that story and lets you try it live.",
+    "cta": "Experiment"
+  },
+  "novel": {
+    "eyebrow": "The novel",
+    "title": "Crime and Punishment, 1866",
+    "lead": "Long before artificial intelligence, there was this novel: the story of Raskolnikov, a student in Saint Petersburg wrestling with guilt, poverty, and redemption.",
+    "cardTitle": "Why it matters here",
+    "cardBody": "Fyodor Dostoevsky published Crime and Punishment in 1866. More than a century later, a Google team used the English text of the novel — now in the public domain — to teach a machine to mimic its rhythm and tone. It is not a summary or a translation: it is an experiment asking whether a book can teach a style."
+  },
+  "timeline": {
+    "eyebrow": "Timeline",
+    "title": "From page to model",
+    "entries": {
+      "1866": {
+        "year": "1866",
+        "title": "Crime and Punishment is published",
+        "description": "Dostoevsky finishes one of the nineteenth century's most influential novels. The text outlives generations and eventually reaches public-domain digital libraries."
+      },
+      "2020-paper": {
+        "year": "Jan 2020",
+        "title": "Google introduces Reformer",
+        "description": "Researchers publish Reformer: The Efficient Transformer, an architecture built to handle long sequences with less memory than classic transformers."
+      },
+      "2020-trained": {
+        "year": "2020",
+        "title": "Trained on the novel",
+        "description": "Google trains a Reformer checkpoint on English passages from Crime and Punishment — roughly half a million words — and releases it as google/reformer-crime-and-punishment."
+      },
+      "today": {
+        "year": "Today",
+        "title": "You can try it yourself",
+        "description": "This museum loads that same 2020 model in the cloud. Type a few words and watch how it continues the text with Dostoevsky's echo."
+      }
+    }
+  },
+  "howItWorks": {
+    "eyebrow": "How it works",
+    "title": "Three steps, no jargon",
+    "steps": {
+      "read": {
+        "title": "It read the book",
+        "description": "The model was exposed to the full English text of Crime and Punishment, word by word, many times over."
+      },
+      "patterns": {
+        "title": "It learned patterns",
+        "description": "Without understanding the plot like a human, it picked up how sentences tend to chain together: the rhythm, the pauses, and the words Dostoevsky repeats."
+      },
+      "continue": {
+        "title": "It continues your sentences",
+        "description": "You write the start of a sentence; the model suggests words that might follow, as if finishing a paragraph from the book."
+      }
+    }
+  },
+  "footer": {
+    "builtBy": "Built by",
+    "author": "jseramn",
+    "tagline": "An open museum about one of the earliest Reformer language models — for learning history, not replacing reading.",
+    "sources": "Sources",
+    "sourceReformer": "Reformer (Google Research)",
+    "sourceModel": "google/reformer-crime-and-punishment",
+    "sourceNovel": "Crime and Punishment (public domain)",
+    "infra": "Infrastructure",
+    "infraVercel": "Vercel",
+    "infraModal": "Modal",
+    "infraPosthog": "PostHog",
+    "openSource": "Open source",
+    "license": "GPL-3.0",
+    "privacyNote": "PostHog records page views and usage events anonymously. We do not store the text you type."
+  },
+  "experiment": {
+    "title": "Try the model",
+    "description": "Write an opening line and let the 2020 Reformer model continue the passage in the style of Crime and Punishment.",
+    "promptLabel": "Your prompt",
+    "promptPlaceholder": "Write the opening of a passage…",
+    "suggestedLabel": "Suggested openings",
+    "creativityLabel": "Creativity",
+    "creativityFaithful": "Faithful to book",
+    "creativityImaginative": "Imaginative",
+    "lengthLabel": "Length",
+    "lengthShort": "Short",
+    "lengthMedium": "Medium",
+    "lengthLong": "Long",
+    "generate": "Generate",
+    "loading": "The model is thinking…",
+    "expectationWarning": "The output may sound strange or incoherent — that is expected for a small 2020 research model.",
+    "englishNote": "Note: the model writes in English.",
+    "resultIdle": "Generated text will appear here.",
+    "suggestedPrompts": {
+      "0": "Raskolnikov walked down the street",
+      "1": "A few months later",
+      "2": "He suddenly stopped and thought:"
+    }
+  },
+  "errors": {
+    "network": "We could not reach the server. Check your connection and try again.",
+    "timeout": "Generation took too long. Try a shorter prompt.",
+    "server": "The inference server is unavailable. Please try again later.",
+    "serviceUnavailable": "Generation service is not configured.",
+    "rateLimit": "Too many requests. Wait a moment before trying again.",
+    "emptyPrompt": "Type at least a few words so the model can continue.",
+    "invalidInput": "The submitted text is not valid. Review the content and try again.",
+    "validation": "Invalid request. Check your prompt and settings.",
+    "generationFailed": "Generation failed. Please try again.",
+    "unknown": "Something went wrong. Try again in a few seconds."
+  }
+}

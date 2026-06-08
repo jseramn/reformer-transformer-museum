@@ -1,0 +1,120 @@
+{
+  "nav": {
+    "brand": "Museo Reformer",
+    "home": "Inicio",
+    "history": "Historia",
+    "howItWorks": "Cómo funciona",
+    "experiment": "Experimenta",
+    "languageEs": "ES",
+    "languageEn": "EN"
+  },
+  "hero": {
+    "eyebrow": "Un modelo de 2020",
+    "title": "Una máquina que aprendió a escribir como Dostoyevski",
+    "lead": "En 2020, investigadores de Google entrenaron un modelo de lenguaje con la novela Crimen y castigo. Este museo cuenta esa historia y te deja probarlo en vivo.",
+    "cta": "Experimenta"
+  },
+  "novel": {
+    "eyebrow": "La novela",
+    "title": "Crimen y castigo, 1866",
+    "lead": "Antes de existir la inteligencia artificial, existía esta novela: la historia de Raskólnikov, un estudiante en San Petersburgo que debate la culpa, la pobreza y la redención.",
+    "cardTitle": "Por qué importa aquí",
+    "cardBody": "Fiódor Dostoyevski publicó Crimen y castigo en 1866. Más de un siglo después, un equipo de Google usó el texto en inglés de la novela — ya en dominio público — para enseñar a una máquina a imitar su ritmo y su tono. No es un resumen ni una traducción: es un experimento que pregunta si un libro puede enseñar un estilo."
+  },
+  "timeline": {
+    "eyebrow": "Línea de tiempo",
+    "title": "Del papel al modelo",
+    "entries": {
+      "1866": {
+        "year": "1866",
+        "title": "Se publica Crimen y castigo",
+        "description": "Dostoyevski termina una de las novelas más influyentes del siglo XIX. El texto sobrevive generaciones y, eventualmente, llega a las bibliotecas digitales en dominio público."
+      },
+      "2020-paper": {
+        "year": "Ene 2020",
+        "title": "Google presenta Reformer",
+        "description": "Investigadores publican Reformer: The Efficient Transformer, una arquitectura diseñada para procesar secuencias largas con menos memoria que los transformadores clásicos."
+      },
+      "2020-trained": {
+        "year": "2020",
+        "title": "Entrenado con la novela",
+        "description": "Google entrena un checkpoint de Reformer con fragmentos en inglés de Crimen y castigo — unas 500.000 palabras — y lo publica como google/reformer-crime-and-punishment."
+      },
+      "today": {
+        "year": "Hoy",
+        "title": "Puedes probarlo tú mismo",
+        "description": "Este museo carga ese mismo modelo de 2020 en la nube. Escribe unas palabras y observa cómo continúa el texto con el eco de Dostoyevski."
+      }
+    }
+  },
+  "howItWorks": {
+    "eyebrow": "Cómo funciona",
+    "title": "Tres pasos, sin jerga",
+    "steps": {
+      "read": {
+        "title": "Leyó el libro",
+        "description": "El modelo se expuso al texto completo de Crimen y castigo en inglés, palabra por palabra, muchas veces."
+      },
+      "patterns": {
+        "title": "Aprendió patrones",
+        "description": "Sin entender la trama como un humano, captó cómo suelen encadenarse las frases: el ritmo, las pausas y las palabras que Dostoyevski repite."
+      },
+      "continue": {
+        "title": "Continúa tus frases",
+        "description": "Tú escribes el comienzo de una oración; el modelo sugiere las palabras que podrían seguir, como si completara un párrafo del libro."
+      }
+    }
+  },
+  "footer": {
+    "builtBy": "Construido por",
+    "author": "jseramn",
+    "tagline": "Un museo abierto sobre uno de los primeros modelos de lenguaje Reformer, para aprender historia — no para reemplazar la lectura.",
+    "sources": "Fuentes",
+    "sourceReformer": "Reformer (Google Research)",
+    "sourceModel": "google/reformer-crime-and-punishment",
+    "sourceNovel": "Crimen y castigo (dominio público)",
+    "infra": "Infraestructura",
+    "infraVercel": "Vercel",
+    "infraModal": "Modal",
+    "infraPosthog": "PostHog",
+    "openSource": "Código abierto",
+    "license": "GPL-3.0",
+    "privacyNote": "PostHog registra visitas y eventos de uso de forma anónima. No guardamos el texto que escribes."
+  },
+  "experiment": {
+    "title": "Prueba el modelo",
+    "description": "Escribe una frase inicial y deja que el modelo Reformer de 2020 continúe el pasaje al estilo de Crimen y castigo.",
+    "promptLabel": "Tu prompt",
+    "promptPlaceholder": "Escribe el inicio de un pasaje…",
+    "suggestedLabel": "Aperturas sugeridas",
+    "creativityLabel": "Creatividad",
+    "creativityFaithful": "Fiel al libro",
+    "creativityImaginative": "Imaginativo",
+    "lengthLabel": "Longitud",
+    "lengthShort": "Corto",
+    "lengthMedium": "Medio",
+    "lengthLong": "Largo",
+    "generate": "Generar",
+    "loading": "El modelo está pensando…",
+    "expectationWarning": "El resultado puede sonar extraño o incoherente — es lo esperable en un modelo de investigación pequeño de 2020.",
+    "englishNote": "Nota: el modelo escribe en inglés.",
+    "resultIdle": "El texto generado aparecerá aquí.",
+    "suggestedPrompts": {
+      "0": "Raskolnikov walked down the street",
+      "1": "A few months later",
+      "2": "He suddenly stopped and thought:"
+    }
+  },
+  "errors": {
+    "network": "No pudimos conectar con el servidor. Comprueba tu conexión e inténtalo de nuevo.",
+    "timeout": "La generación tardó demasiado. Prueba con un texto más corto.",
+    "server": "El servidor de inferencia no está disponible. Inténtalo más tarde.",
+    "serviceUnavailable": "El servicio de generación no está configurado.",
+    "rateLimit": "Demasiadas solicitudes. Espera un momento antes de volver a intentarlo.",
+    "emptyPrompt": "Escribe al menos unas palabras para que el modelo pueda continuar.",
+    "invalidInput": "El texto enviado no es válido. Revisa el contenido e inténtalo de nuevo.",
+    "validation": "Solicitud no válida. Revisa el prompt y la configuración.",
+    "generationFailed": "La generación falló. Inténtalo de nuevo.",
+    "unknown": "Algo salió mal. Inténtalo de nuevo en unos segundos."
+  }
+}

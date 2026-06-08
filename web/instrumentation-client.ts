@@ -1,0 +1,13 @@
+import posthog from "posthog-js";
+
+const token = process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN;
+
+if (typeof window !== "undefined" && token) {
+  posthog.init(token, {
+    api_host: "/ingest",
+    ui_host: process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com",
+    person_profiles: "identified_only",
+    capture_pageview: true,
+    capture_pageleave: true,
+  });
+}

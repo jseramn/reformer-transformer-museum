@@ -1,0 +1,91 @@
+@import "tailwindcss";
+@config "../tailwind.config.ts";
+
+:root {
+  /* Brand & accent */
+  --color-primary: #ffffff;
+  --color-on-primary: #0a0a0a;
+  --color-accent-sunset: #ff7a17;
+  --color-accent-sunset-soft: #ffc285;
+  --color-accent-dusk: #7c3aed;
+  --color-accent-twilight: #c4b5fd;
+  --color-accent-breeze: #a0c3ec;
+  --color-accent-midnight: #0d1726;
+
+  /* Surface */
+  --color-canvas: #0a0a0a;
+  --color-canvas-soft: #1a1c20;
+  --color-canvas-card: #191919;
+  --color-canvas-mid: #363a3f;
+  --color-hairline: #212327;
+  --color-border-translucent: rgba(255, 255, 255, 0.25);
+
+  /* Text */
+  --color-ink: #ffffff;
+  --color-ink-hover: #fafaf7;
+  --color-body: #dadbdf;
+  --color-body-mid: #7d8187;
+
+  /* Spacing */
+  --spacing-xxs: 2px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 48px;
+  --spacing-4xl: 64px;
+
+  /* Radius */
+  --rounded-none: 0px;
+  --rounded-sm: 8px;
+  --rounded-pill: 9999px;
+  --rounded-full: 9999px;
+
+  /* Layout */
+  --container-max: 1200px;
+}
+
+@theme inline {
+  --color-primary: var(--color-primary);
+  --color-on-primary: var(--color-on-primary);
+  --color-accent-sunset: var(--color-accent-sunset);
+  --color-accent-sunset-soft: var(--color-accent-sunset-soft);
+  --color-accent-dusk: var(--color-accent-dusk);
+  --color-accent-twilight: var(--color-accent-twilight);
+  --color-accent-breeze: var(--color-accent-breeze);
+  --color-accent-midnight: var(--color-accent-midnight);
+  --color-canvas: var(--color-canvas);
+  --color-canvas-soft: var(--color-canvas-soft);
+  --color-canvas-card: var(--color-canvas-card);
+  --color-canvas-mid: var(--color-canvas-mid);
+  --color-hairline: var(--color-hairline);
+  --color-ink: var(--color-ink);
+  --color-ink-hover: var(--color-ink-hover);
+  --color-body: var(--color-body);
+  --color-body-mid: var(--color-body-mid);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-inter), Inter, system-ui, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
