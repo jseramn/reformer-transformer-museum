@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${geistMono.variable} h-full antialiased dark`}
     >
       <body className="flex min-h-full flex-col font-sans font-normal">
         <I18nProvider>

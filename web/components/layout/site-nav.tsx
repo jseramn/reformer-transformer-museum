@@ -1,22 +1,26 @@
 "use client";
 
+import { MorphicNavbar } from "@/components/kokonutui/morphic-navbar";
 import { PillButton } from "@/components/ui/pill-button";
 import { useI18n } from "@/lib/i18n/provider";
 import { useTranslations } from "@/lib/i18n/use-translations";
-
-const navItems = [
-  { href: "#inicio", key: "home" as const },
-  { href: "#historia", key: "history" as const },
-  { href: "#como-funciona", key: "howItWorks" as const },
-  { href: "#experimenta", key: "experiment" as const },
-] as const;
 
 export function SiteNav() {
   const t = useTranslations();
   const { locale, setLocale } = useI18n();
 
+  // Build items for the Kokonut morphic navbar using current translations.
+  // hrefs match the section ids used throughout the museum.
+  const morphicItems = [
+    { name: t.nav.home, href: "#inicio" },
+    { name: t.nav.history, href: "#historia" },
+    { name: t.nav.howItWorks, href: "#como-funciona" },
+    { name: t.nav.experiment, href: "#experimenta" },
+  ];
+
   return (
-    <header className="sticky top-0 z-50 border-b border-hairline bg-canvas">
+    <header className="sticky top-0 z-50 bg-canvas">
+      {/* Border-b removed per user request (no separating line under navbar) */}
       <nav
         className="mx-auto flex max-w-container flex-wrap items-center justify-between gap-lg px-xl py-md"
         aria-label="Main navigation"
@@ -26,15 +30,7 @@ export function SiteNav() {
         </a>
 
         <div className="flex flex-wrap items-center gap-sm">
-          <ul className="flex flex-wrap items-center gap-sm">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <PillButton href={item.href} variant="outline">
-                  {t.nav[item.key]}
-                </PillButton>
-              </li>
-            ))}
-          </ul>
+          <MorphicNavbar items={morphicItems} />
 
           <div
             className="flex items-center gap-xs"

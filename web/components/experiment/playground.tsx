@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import AI_Prompt from "@/components/kokonutui/ai-prompt";
+import AITextLoading from "@/components/kokonutui/ai-text-loading";
 import { CreativitySlider } from "@/components/experiment/creativity-slider";
 import { PromptChips } from "@/components/experiment/prompt-chips";
-import { ResultCard } from "@/components/experiment/result-card";
 import type { GenerateResponse, PlaygroundStatus } from "@/components/experiment/types";
 import type { ApiErrorResponse, GenerationErrorCode } from "@/types";
 import { EyebrowMono } from "@/components/ui/eyebrow-mono";
 import { PillButton } from "@/components/ui/pill-button";
+import { cn } from "@/lib/utils";
 import { captureExperimentSubmitted } from "@/lib/analytics/posthog-client";
 import {
   API_LIMITS,
@@ -34,6 +36,10 @@ export function Playground() {
   const [resultText, setResultText] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  // Simple chat history for the playground "ventana de chat" experience
+  type ChatMessage = { role: "user" | "model"; text: string };
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+
   const isLoading = status === "loading";
   const canGenerate = prompt.trim().length >= API_LIMITS.promptMinLength && !isLoading;
 
@@ -55,13 +61,17 @@ export function Playground() {
     long: t.experiment.lengthLong,
   };
 
-  async function handleGenerate() {
-    const trimmedPrompt = prompt.trim();
+  async function handleGenerate(overridePrompt?: string) {
+    const source = overridePrompt ?? prompt;
+    const trimmedPrompt = source.trim();
     if (trimmedPrompt.length < API_LIMITS.promptMinLength) return;
 
     setStatus("loading");
     setErrorMessage("");
     setResultText("");
+
+    // Push user message to chat history immediately for the playground window feel
+    setMessages((prev) => [...prev, { role: "user", text: trimmedPrompt }]);
 
     const maxLength = LENGTH_PRESETS[lengthPreset];
     captureExperimentSubmitted({
@@ -93,15 +103,16 @@ export function Playground() {
       const data = (await response.json()) as GenerateResponse;
       setResultText(data.text);
       setStatus("success");
+
+      // Append model response to the chat history (playground window)
+      setMessages((prev) => [...prev, { role: "model", text: data.text }]);
     } catch (error) {
       setStatus("error");
-      if (error instanceof TypeError) {
-        setErrorMessage(t.errors.network);
-        return;
-      }
-      setErrorMessage(
-        error instanceof Error ? error.message : t.errors.unknown,
-      );
+      const errMsg = error instanceof TypeError ? t.errors.network : (error instanceof Error ? error.message : t.errors.unknown);
+      setErrorMessage(errMsg);
+
+      // Show the error as a model message in the chat for the playground UX
+      setMessages((prev) => [...prev, { role: "model", text: errMsg }]);
     }
   }
 
@@ -115,28 +126,110 @@ export function Playground() {
 
   return (
     <div className="flex flex-col gap-2xl">
-      <div className="flex flex-col gap-md">
-        <label htmlFor="experiment-prompt" className="text-body-sm text-body">
-          {t.experiment.promptLabel}
-        </label>
-        <textarea
-          id="experiment-prompt"
-          value={prompt}
-          maxLength={API_LIMITS.promptMaxLength}
-          placeholder={t.experiment.promptPlaceholder}
-          disabled={isLoading}
-          onChange={(event) => {
-            setPrompt(event.target.value);
-            setSelectedPromptId(null);
-            if (status !== "loading") {
-              setStatus("idle");
-            }
-          }}
-          rows={3}
-          className="w-full resize-y rounded-sm border border-hairline bg-canvas-soft px-lg py-md text-body-md font-normal text-ink placeholder:text-body-mid focus:outline-none focus:ring-1 focus:ring-[var(--color-border-translucent)] disabled:opacity-50"
-        />
+      {/* The whole interaction is now a "playground chat window" per user request.
+          Resembles a dedicated AI chat interface / ventana with the model. */}
+      <div className="overflow-hidden rounded-2xl border border-hairline bg-canvas-card">
+        {/* Window header bar */}
+        <div className="flex items-center justify-between border-b border-hairline bg-canvas-soft/60 px-4 py-2 text-sm">
+          <div className="font-medium text-ink">{t.experiment.playgroundWindowTitle}</div>
+          <div className="text-caption-mono-sm text-body-mid">{t.experiment.playgroundWindowSubtitle}</div>
+        </div>
+
+        {/* Scrollable chat history */}
+        <div className="max-h-[420px] overflow-y-auto p-4 space-y-4 bg-canvas/60" aria-live="polite">
+          {messages.length === 0 && !isLoading && (
+            <div className="text-center text-body-mid text-sm py-8">
+              {t.experiment.playgroundEmpty}
+            </div>
+          )}
+
+          {messages.map((msg, idx) => (
+            <div
+              key={idx}
+              className={cn(
+                "max-w-[85%] rounded-xl px-4 py-3 text-body-md whitespace-pre-wrap",
+                msg.role === "user"
+                  ? "ml-auto bg-[var(--color-border-translucent)]/30 text-ink"
+                  : "mr-auto bg-canvas-soft text-body border border-hairline"
+              )}
+            >
+              {msg.role === "model" && (
+                <div className="text-caption-mono-sm uppercase tracking-wider text-body-mid mb-1">Reformer</div>
+              )}
+              {msg.text}
+            </div>
+          ))}
+
+          {/* Inline loading / process inside the chat (uses the ai-text-loading) */}
+          {isLoading && (
+            <div className="mr-auto max-w-[85%] rounded-xl border border-hairline bg-canvas-soft px-4 py-3">
+              <div className="text-caption-mono-sm uppercase tracking-wider text-body-mid mb-1">Reformer</div>
+              <AITextLoading
+                texts={((t.experiment as any).loadingPhases as string[]) ?? ["Pensando...", "Procesando...", "Generando..."]}
+                interval={1200}
+                className="text-body"
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Controls toolbar inside the window */}
+        <div className="border-t border-hairline bg-canvas-soft/40 px-4 py-3">
+          <div className="flex flex-col gap-3 md:flex-row md:items-end">
+            <div className="flex-1">
+              <CreativitySlider
+                value={temperature}
+                onChange={setTemperature}
+                disabled={isLoading}
+              />
+            </div>
+
+            <fieldset className="flex flex-col gap-sm">
+              <legend className="text-body-sm font-normal text-body">
+                {t.experiment.lengthLabel}
+              </legend>
+              <div className="flex flex-wrap gap-sm">
+                {LENGTH_PRESET_KEYS.map((preset) => (
+                  <PillButton
+                    key={preset}
+                    type="button"
+                    variant={lengthPreset === preset ? "primary" : "outline"}
+                    disabled={isLoading}
+                    aria-pressed={lengthPreset === preset}
+                    onClick={() => setLengthPreset(preset)}
+                  >
+                    {lengthLabels[preset]}
+                  </PillButton>
+                ))}
+              </div>
+            </fieldset>
+          </div>
+        </div>
+
+        {/* Fancy prompt composer at the bottom (now looks like the original Kokonut one) */}
+        <div className="border-t border-hairline p-3 bg-canvas">
+          <AI_Prompt
+            value={prompt}
+            onChange={(next) => {
+              setPrompt(next);
+              setSelectedPromptId(null);
+              if (status !== "loading") {
+                setStatus("idle");
+              }
+            }}
+            placeholder={t.experiment.promptPlaceholder}
+            disabled={isLoading}
+            maxLength={API_LIMITS.promptMaxLength}
+            onSubmit={(submitted) => {
+              setPrompt(submitted);
+              setSelectedPromptId(null);
+              handleGenerate(submitted);
+            }}
+          />
+        </div>
       </div>
 
+      {/* Suggested openings (quick starters for the chat) */}
       <div className="flex flex-col gap-sm">
         <EyebrowMono size="sm">{t.experiment.suggestedLabel}</EyebrowMono>
         <PromptChips
@@ -146,56 +239,11 @@ export function Playground() {
         />
       </div>
 
-      <div className="grid gap-2xl md:grid-cols-2">
-        <CreativitySlider
-          value={temperature}
-          onChange={setTemperature}
-          disabled={isLoading}
-        />
-
-        <fieldset className="flex flex-col gap-sm border-0 p-0">
-          <legend className="text-body-sm font-normal text-body">
-            {t.experiment.lengthLabel}
-          </legend>
-          <div className="flex flex-wrap gap-sm">
-            {LENGTH_PRESET_KEYS.map((preset) => (
-              <PillButton
-                key={preset}
-                type="button"
-                variant={lengthPreset === preset ? "primary" : "outline"}
-                disabled={isLoading}
-                aria-pressed={lengthPreset === preset}
-                onClick={() => setLengthPreset(preset)}
-              >
-                {lengthLabels[preset]}
-              </PillButton>
-            ))}
-          </div>
-        </fieldset>
-      </div>
-
+      {/* Warnings stay visible but outside the main window */}
       <div className="flex flex-col gap-sm text-body-sm text-body-mid">
         <p>{t.experiment.expectationWarning}</p>
         <p>{t.experiment.englishNote}</p>
       </div>
-
-      <div>
-        <PillButton
-          type="button"
-          variant="primary"
-          disabled={!canGenerate}
-          onClick={handleGenerate}
-          aria-disabled={!canGenerate}
-        >
-          {t.experiment.generate}
-        </PillButton>
-      </div>
-
-      <ResultCard
-        status={status}
-        resultText={resultText}
-        errorMessage={errorMessage}
-      />
     </div>
   );
 }

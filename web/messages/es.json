@@ -98,7 +98,16 @@
     "loading": "El modelo está pensando…",
     "expectationWarning": "El resultado puede sonar extraño o incoherente — es lo esperable en un modelo de investigación pequeño de 2020.",
     "englishNote": "Nota: el modelo escribe en inglés.",
+    "playgroundWindowTitle": "Reformer Playground",
+    "playgroundWindowSubtitle": "Chat con el modelo 2020",
+    "playgroundEmpty": "Escribe un prompt o usa una apertura sugerida para comenzar el chat.",
     "resultIdle": "El texto generado aparecerá aquí.",
+    "loadingPhases": [
+      "Enviando prompt al modelo...",
+      "El modelo está procesando...",
+      "Generando texto en estilo Dostoyevski...",
+      "Casi listo..."
+    ],
     "suggestedPrompts": {
       "0": "Raskolnikov walked down the street",
       "1": "A few months later",

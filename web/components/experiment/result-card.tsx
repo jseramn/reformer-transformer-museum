@@ -1,5 +1,6 @@
 "use client";
 
+import AITextLoading from "@/components/kokonutui/ai-text-loading";
 import { CardContent } from "@/components/ui/card-content";
 import type { PlaygroundStatus } from "@/components/experiment/types";
 import { useTranslations } from "@/lib/i18n/use-translations";
@@ -13,9 +14,11 @@ type ResultCardProps = {
 export function ResultCard({ status, resultText, errorMessage }: ResultCardProps) {
   const t = useTranslations();
 
+  const phases = (t.experiment as any).loadingPhases as string[] | undefined;
+
   const liveMessage =
     status === "loading"
-      ? t.experiment.loading
+      ? (phases?.[0] ?? t.experiment.loading)
       : status === "success"
         ? resultText
         : status === "error"
@@ -34,7 +37,11 @@ export function ResultCard({ status, resultText, errorMessage }: ResultCardProps
       )}
 
       {status === "loading" && (
-        <p className="text-body-md text-body">{t.experiment.loading}</p>
+        <AITextLoading
+          texts={phases ?? ["Thinking...", "Processing...", "Generating...", "Almost..."]}
+          interval={1350}
+          className="text-base"
+        />
       )}
 
       {status === "success" && (

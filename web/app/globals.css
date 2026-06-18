@@ -89,3 +89,50 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* shadcn/ui semantic tokens mapped to our strict dark-canvas design system (DESIGN.md)
+   These allow the pulled ui/* primitives (button, textarea, dropdown) and Kokonut components
+   to render with our colors, radii, and surfaces without introducing light mode or new hues.
+   NOTE: Per current plan, DESIGN.md takes absolute precedence. These mappings exist only
+   to prevent crashes from any remaining internal usage; new UI must use the project's
+   native tokens and PillButton / CardContent primitives directly. */
+:root {
+  --background: var(--color-canvas);
+  --foreground: var(--color-ink);
+
+  --card: var(--color-canvas-card);
+  --card-foreground: var(--color-ink);
+
+  --popover: var(--color-canvas-card);
+  --popover-foreground: var(--color-ink);
+
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-on-primary);
+
+  --secondary: var(--color-canvas-soft);
+  --secondary-foreground: var(--color-ink);
+
+  --muted: var(--color-canvas-soft);
+  --muted-foreground: var(--color-body-mid);
+
+  --accent: var(--color-canvas-mid);
+  --accent-foreground: var(--color-ink);
+
+  --destructive: var(--color-accent-sunset);
+  --destructive-foreground: var(--color-on-primary);
+
+  --border: var(--color-hairline);
+  --input: var(--color-canvas-soft);
+  --ring: var(--color-border-translucent);
+
+  --radius: var(--rounded-sm);
+  --radius-sm: 8px;
+  --radius-md: 8px;
+  --radius-lg: 8px;
+
+  /* ring offset for focus styles in shadcn button etc. */
+  --ring-offset-background: var(--color-canvas);
+}
+
+/* No .glass or backdrop-filter allowed per DESIGN.md (no atmospheric/frosted effects).
+   Any previous .glass definition has been removed. Use hairline + canvas surfaces only. */
